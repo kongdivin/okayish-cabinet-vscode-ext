@@ -1,0 +1,203 @@
+{
+	"name": "okayish-cabinet-vscode-ext",
+	"displayName": "Ok-ish Cabinet",
+	"description": "An ok-ish note cabinet for developers",
+	"version": "0.0.8",
+	"preview": true,
+	"license": "MIT",
+	"author": "kongdivin",
+	"publisher": "okayish-dev",
+	"icon": "resources/icons/notebook.png",
+	"homepage": "https://marketplace.visualstudio.com/items?itemName=okayish-dev.okayish-cabinet-vscode-ext",
+	"bugs": {
+		"url": "https://github.com/kongdivin/okayish-cabinet-vscode-ext/issues",
+		"email": "comm@okayish.dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kongdivin/okayish-cabinet-vscode-ext.git"
+	},
+	"keywords": [
+		"okayish dev",
+		"vscode extension",
+		"notebook",
+		"note taking"
+	],
+	"engines": {
+		"vscode": "^1.40.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onView:notebook",
+		"onCommand:okayishCabinet.refreshNotebook",
+		"onCommand:okayishCabinet.createSection",
+		"onCommand:okayishCabinet.createPage"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "okayishCabinet",
+					"title": "Okayish Cabinet",
+					"icon": "resources/icons/notebook.svg"
+				}
+			]
+		},
+		"views": {
+			"okayishCabinet": [
+				{
+					"id": "notebook",
+					"name": "Notebook"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "okayishCabinet.refreshNotebook",
+					"when": "view == notebook",
+					"group": "navigation@1"
+				},
+				{
+					"command": "okayishCabinet.createSection",
+					"when": "view == notebook",
+					"group": "navigation@2"
+				},
+				{
+					"command": "okayishCabinet.createPage",
+					"when": "view == notebook",
+					"group": "navigation@3"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "okayishCabinet.previewPage",
+					"when": "view == notebook && viewItem == page",
+					"group": "1--notebook--viewer@1"
+				},
+				{
+					"command": "okayishCabinet.renameElement",
+					"when": "view == notebook",
+					"group": "2--notebook--alterant@1"
+				},
+				{
+					"command": "okayishCabinet.moveElement",
+					"when": "view == notebook",
+					"group": "2--notebook--alterant@2"
+				},
+				{
+					"command": "okayishCabinet.deleteElement",
+					"when": "view == notebook",
+					"group": "2--notebook--alterant@3"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "okayishCabinet.previewPage",
+					"when": "false"
+				},
+				{
+					"command": "okayishCabinet.renameElement",
+					"when": "false"
+				},
+				{
+					"command": "okayishCabinet.moveElement",
+					"when": "false"
+				},
+				{
+					"command": "okayishCabinet.deleteElement",
+					"when": "false"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "okayishCabinet.refreshNotebook",
+				"title": "Refresh",
+				"category": "Okayish",
+				"icon": {
+					"dark": "resources/icons/dark/refresh.svg",
+					"light": "resources/icons/light/refresh.svg"
+				}
+			},
+			{
+				"command": "okayishCabinet.createSection",
+				"title": "Create a new section",
+				"category": "Okayish",
+				"icon": {
+					"dark": "resources/icons/dark/add-folder.svg",
+					"light": "resources/icons/light/add-folder.svg"
+				}
+			},
+			{
+				"command": "okayishCabinet.createPage",
+				"title": "Create a new page",
+				"category": "Okayish",
+				"icon": {
+					"dark": "resources/icons/dark/add-page.svg",
+					"light": "resources/icons/light/add-page.svg"
+				}
+			},
+			{
+				"command": "okayishCabinet.previewPage",
+				"title": "Preview",
+				"category": "Okayish"
+			},
+			{
+				"command": "okayishCabinet.renameElement",
+				"title": "Rename",
+				"category": "Okayish"
+			},
+			{
+				"command": "okayishCabinet.moveElement",
+				"title": "Move",
+				"category": "Okayish"
+			},
+			{
+				"command": "okayishCabinet.deleteElement",
+				"title": "Delete",
+				"category": "Okayish"
+			}
+		],
+		"configuration": {
+			"title": "Ok-ish Cabinet",
+			"properties": {
+				"okayishCabinet.cabinetLocation": {
+					"type": "string",
+					"default": "",
+					"description": "Set the cabinet root location"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
+		"compile": "tsc -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/markdown-it": "0.0.9",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.12.25",
+		"@types/vscode": "^1.40.0",
+		"glob": "^7.1.6",
+		"mocha": "^6.2.2",
+		"ts-loader": "^6.2.1",
+		"tslint": "^5.20.1",
+		"typescript": "^3.7.5",
+		"vscode-test": "^1.3.0",
+		"webpack": "^4.41.5",
+		"webpack-cli": "^3.3.10"
+	},
+	"dependencies": {
+		"gray-matter": "^4.0.2",
+		"markdown-it": "^10.0.0"
+	}
+}

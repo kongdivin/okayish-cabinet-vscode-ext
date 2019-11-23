@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOs-latest]
+        node: [ '12' ]
+        
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node: ${{ matrix.node }}
+    - run: npm install
+    - run: npm run pretest
+    - run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+      if: matrix.os == 'ubuntu-latest'
+    - run: npm run test
+      env:
+        DISPLAY: ':99.0'

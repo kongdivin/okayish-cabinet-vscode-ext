@@ -25,8 +25,10 @@ export function activate(context: vscode.ExtensionContext) {
 	const cabinetElementQuickPick = new FSCabinetElementQuickPick(config);
 	const cmdFactory = new CabinetCommandFactory(uriProvider);
 	const cabinetDataProvider = new CabinetDataProvider(cabinet, cmdFactory, fsEventEmitter.event);
-	
-	vscode.window.createTreeView("notebook", { treeDataProvider: cabinetDataProvider });
+
+	vscode.window.createTreeView("notebookInCabinet", { treeDataProvider: cabinetDataProvider });
+	vscode.window.createTreeView("notebookInExplorer", { treeDataProvider: cabinetDataProvider });
+
 	context.subscriptions.push(new RefreshNotebookCommand(fsEventEmitter).register());
 	context.subscriptions.push(new CreateSectionCommand(cabinet, cabinetElementQuickPick).register());
 	context.subscriptions.push(new CreatePageCommand(cabinet, cabinetElementQuickPick).register());
@@ -37,6 +39,4 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { 
-
-}
+export function deactivate() { }

@@ -2,7 +2,7 @@
 	"name": "okayish-cabinet-vscode-ext",
 	"displayName": "Ok-ish Cabinet",
 	"description": "An ok-ish note cabinet for developers",
-	"version": "0.0.8",
+	"version": "0.1.1",
 	"preview": true,
 	"license": "MIT",
 	"author": "kongdivin",
@@ -24,13 +24,14 @@
 		"note taking"
 	],
 	"engines": {
-		"vscode": "^1.40.0"
+		"vscode": "^1.41.0"
 	},
 	"categories": [
 		"Other"
 	],
 	"activationEvents": [
-		"onView:notebook",
+		"onView:notebookInExplorer",
+		"onView:notebookInCabinet",
 		"onCommand:okayishCabinet.refreshNotebook",
 		"onCommand:okayishCabinet.createSection",
 		"onCommand:okayishCabinet.createPage"
@@ -47,9 +48,16 @@
 			]
 		},
 		"views": {
+			"explorer": [
+				{
+					"id": "notebookInExplorer",
+					"name": "Notebook",
+					"when": "config.okayishCabinet.notebookInExplorer"
+				}
+			],
 			"okayishCabinet": [
 				{
-					"id": "notebook",
+					"id": "notebookInCabinet",
 					"name": "Notebook"
 				}
 			]
@@ -58,39 +66,49 @@
 			"view/title": [
 				{
 					"command": "okayishCabinet.refreshNotebook",
-					"when": "view == notebook",
+					"when": "view == notebookInExplorer || view == notebookInCabinet",
 					"group": "navigation@1"
 				},
 				{
 					"command": "okayishCabinet.createSection",
-					"when": "view == notebook",
+					"when": "view == notebookInExplorer || view == notebookInCabinet",
 					"group": "navigation@2"
 				},
 				{
 					"command": "okayishCabinet.createPage",
-					"when": "view == notebook",
+					"when": "view == notebookInExplorer || view == notebookInCabinet",
 					"group": "navigation@3"
 				}
 			],
 			"view/item/context": [
 				{
 					"command": "okayishCabinet.previewPage",
-					"when": "view == notebook && viewItem == page",
+					"when": "view == notebookInExplorer && viewItem == page || view == notebookInCabinet && viewItem == page",
 					"group": "1--notebook--viewer@1"
 				},
 				{
+					"command": "okayishCabinet.createSection",
+					"when": "view == notebookInExplorer && viewItem == section || view == notebookInCabinet && viewItem == section",
+					"group": "1--notebook--creation@1"
+				},
+				{
+					"command": "okayishCabinet.createPage",
+					"when": "view == notebookInExplorer && viewItem == section || view == notebookInCabinet && viewItem == section",
+					"group": "1--notebook--creation@2"
+				},
+				{
 					"command": "okayishCabinet.renameElement",
-					"when": "view == notebook",
+					"when": "view == notebookInExplorer || view == notebookInCabinet",
 					"group": "2--notebook--alterant@1"
 				},
 				{
 					"command": "okayishCabinet.moveElement",
-					"when": "view == notebook",
+					"when": "view == notebookInExplorer || view == notebookInCabinet",
 					"group": "2--notebook--alterant@2"
 				},
 				{
 					"command": "okayishCabinet.deleteElement",
-					"when": "view == notebook",
+					"when": "view == notebookInExplorer || view == notebookInCabinet",
 					"group": "2--notebook--alterant@3"
 				}
 			],
@@ -125,7 +143,7 @@
 			},
 			{
 				"command": "okayishCabinet.createSection",
-				"title": "Create a new section",
+				"title": "New section",
 				"category": "Okayish",
 				"icon": {
 					"dark": "resources/icons/dark/add-folder.svg",
@@ -134,7 +152,7 @@
 			},
 			{
 				"command": "okayishCabinet.createPage",
-				"title": "Create a new page",
+				"title": "New page",
 				"category": "Okayish",
 				"icon": {
 					"dark": "resources/icons/dark/add-page.svg",
@@ -169,6 +187,11 @@
 					"type": "string",
 					"default": "",
 					"description": "Set the cabinet root location"
+				},
+				"okayishCabinet.notebookInExplorer": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable Notebook in the explorer"
 				}
 			}
 		}
@@ -186,7 +209,7 @@
 		"@types/markdown-it": "0.0.9",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.12.25",
-		"@types/vscode": "^1.40.0",
+		"@types/vscode": "^1.41.0",
 		"glob": "^7.1.6",
 		"mocha": "^6.2.2",
 		"ts-loader": "^6.2.1",

@@ -24,12 +24,14 @@ export default class CreatePageCommand extends BaseCommand {
         return CreatePageCommand.COMMAND_NAME;
     }
 
-    getCommandAction(): () => Promise<void> {
-        return async () => {
-            const dest = await this.cabinetElementQuickPick.pick(
-                this.cabinetInteractor.retrieveSections(),
-                { placeholder: "Select where to put the new page" }
-            );
+    getCommandAction(): (destId: string) => Promise<void> {
+        return async destId => {
+            const dest = destId
+                ? await this.cabinetInteractor.retrieveSection(destId)
+                : await this.cabinetElementQuickPick.pick(
+                    this.cabinetInteractor.retrieveSections(),
+                    { placeholder: "Select where to put the new page" }
+                );
 
             // User didn't select any
             if (dest === undefined || !(dest instanceof Section)) {

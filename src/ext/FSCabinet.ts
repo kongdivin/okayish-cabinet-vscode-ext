@@ -49,7 +49,7 @@ export default class FSCabinet implements CabinetInteractor {
     }
 
     public async retrieveSection(id: string): Promise<Section> {
-        const elm = this.retrieveElement(id);
+        const elm = await this.retrieveElement(id);
         if (elm instanceof Section) {
             return elm as Section;
         } else {

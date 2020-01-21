@@ -6,7 +6,7 @@
 	"preview": true,
 	"license": "MIT",
 	"author": "kongdivin",
-	"publisher": "okayish-dev",
+	"publisher": "kongdivin",
 	"icon": "resources/icons/notebook.png",
 	"homepage": "https://marketplace.visualstudio.com/items?itemName=okayish-dev.okayish-cabinet-vscode-ext",
 	"bugs": {

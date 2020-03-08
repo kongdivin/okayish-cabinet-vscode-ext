@@ -30,8 +30,8 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.window.createTreeView("notebookInExplorer", { treeDataProvider: cabinetDataProvider });
 
 	context.subscriptions.push(new RefreshNotebookCommand(fsEventEmitter).register());
-	context.subscriptions.push(new CreateSectionCommand(cabinet, cabinetElementQuickPick).register());
-	context.subscriptions.push(new CreatePageCommand(cabinet, cabinetElementQuickPick).register());
+	context.subscriptions.push(new CreateSectionCommand(cabinet, config).register());
+	context.subscriptions.push(new CreatePageCommand(cabinet, config).register());
 	context.subscriptions.push(new PreviewPageCommand(uriProvider).register());
 	context.subscriptions.push(new RenameElementCommand(cabinet).register());
 	context.subscriptions.push(new MoveElementCommand(cabinet, cabinetElementQuickPick).register());

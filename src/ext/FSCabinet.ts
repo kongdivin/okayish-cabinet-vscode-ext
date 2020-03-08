@@ -2,7 +2,7 @@ import { Buffer } from "buffer";
 import * as fs from "fs";
 import * as grayMatter from 'gray-matter';
 import * as path from 'path';
-import { Event, EventEmitter, FileType, Uri, workspace } from "vscode";
+import { Event, EventEmitter, FileType, Uri, workspace, window } from "vscode";
 import CabinetInteractor from "../cabinet-core/CabinetInteractor";
 import CabinetElement from "../cabinet-core/entities/CabinetElement";
 import Page from "../cabinet-core/entities/Page";
@@ -177,8 +177,17 @@ Enter description here (\`${FSCabinet.META_FILE_NAME}\`)
 
 Enjoy your write!`;
 
-        await workspace.fs.writeFile(pageUri, Buffer.from(pageContent));
-        this.notify(parentId);
+        return new Promise(resolve => {
+            fs.exists(pageUri.fsPath, async exists => {
+                if (!exists) {
+                    await workspace.fs.writeFile(pageUri, Buffer.from(pageContent));
+                    this.notify(parentId);
+                } else {
+                    window.showInformationMessage(`${pageName} already exists.`);
+                }
+                resolve();
+            });
+        });
     }
 
     public async renameElement(id: string, newName: string): Promise<void> {

@@ -1,23 +1,22 @@
 import { window } from "vscode";
 import CabinetInteractor from "../../cabinet-core/CabinetInteractor";
-import Section from "../../cabinet-core/entities/Section";
-import FSCabinetElementQuickPick from "../FSCabinetElementQuickPick";
 import BaseCommand from "./BaseCommand";
+import FSCabinetConfig from "../FSCabinetConfig";
 
 const sectionNameRegExp = new RegExp('^[\\w\\s-]+$');
 
 export default class CreateSectionCommand extends BaseCommand {
     public static COMMAND_NAME = "okayishCabinet.createSection";
     private cabinetInteractor: CabinetInteractor;
-    private cabinetElementQuickPick: FSCabinetElementQuickPick;
+    private config: FSCabinetConfig;
 
     constructor(
         cabinetInteractor: CabinetInteractor,
-        cabinetElementQuickPick: FSCabinetElementQuickPick
+        config: FSCabinetConfig
     ) {
         super();
         this.cabinetInteractor = cabinetInteractor;
-        this.cabinetElementQuickPick = cabinetElementQuickPick;
+        this.config = config;
     }
 
     getCommandName(): string {
@@ -28,15 +27,7 @@ export default class CreateSectionCommand extends BaseCommand {
         return async destId => {
             const dest = destId
                 ? await this.cabinetInteractor.retrieveSection(destId)
-                : await this.cabinetElementQuickPick.pick(
-                    this.cabinetInteractor.retrieveSections(),
-                    { placeholder: "Select where to put the new section" }
-                );
-
-            // User didn't select any
-            if (dest === undefined || !(dest instanceof Section)) {
-                return;
-            }
+                : await this.cabinetInteractor.retrieveSection(this.config.getCabinetUri());
 
             const sectionName = await window.showInputBox({
                 prompt: `Parent: ${dest.name}. Be creative! 😉`,

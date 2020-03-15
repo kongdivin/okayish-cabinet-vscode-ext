@@ -2,7 +2,7 @@
 	"name": "okayish-cabinet-vscode-ext",
 	"displayName": "Ok-ish Cabinet",
 	"description": "An ok-ish note cabinet for developers",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"preview": true,
 	"license": "MIT",
 	"author": "kongdivin",

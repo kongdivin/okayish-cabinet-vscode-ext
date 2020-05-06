@@ -167,7 +167,7 @@ Enter description here (\`${FSCabinet.META_FILE_NAME}\`)
         this.notify(parentId);
     }
 
-    public async createPage(pageName: string, parentId: string): Promise<void> {
+    public async createPage(pageName: string, parentId: string): Promise<string> {
         const parentUri = this.uriProvider.computeUri(parentId);
         const pageUri = this.createFileUri(parentUri, `${pageName}.md`);
 
@@ -185,7 +185,7 @@ Enjoy your write!`;
                 } else {
                     window.showInformationMessage(`${pageName} already exists.`);
                 }
-                resolve();
+                resolve(pageUri.toString());
             });
         });
     }

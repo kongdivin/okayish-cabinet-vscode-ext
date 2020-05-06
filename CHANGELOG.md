@@ -1,7 +1,3 @@
 # Change Log
 
-All notable changes to the "okayish-cabinet-vscode-ext" extension will be documented in this file.
-
-## [Unreleased]
-
-- Preview release
+See [here](https://github.com/kongdivin/okayish-cabinet-vscode-ext/releases).

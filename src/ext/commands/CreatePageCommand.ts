@@ -5,18 +5,23 @@ import BaseCommand from "./BaseCommand";
 
 const pageNameRegExp = new RegExp('^[\\w\\s-]+$');
 
+type OnCreatedFn = (pageId: string) => void;
+
 export default class CreatePageCommand extends BaseCommand {
     public static COMMAND_NAME = "okayishCabinet.createPage";
     private cabinetInteractor: CabinetInteractor;
     private config: FSCabinetConfig;
+    private onCreated?: OnCreatedFn;
 
     constructor(
         cabinetInteractor: CabinetInteractor,
-        config: FSCabinetConfig
+        config: FSCabinetConfig,
+        onCreated?: OnCreatedFn
     ) {
         super();
         this.cabinetInteractor = cabinetInteractor;
         this.config = config;
+        this.onCreated = onCreated;
     }
 
     getCommandName(): string {
@@ -50,6 +55,7 @@ export default class CreatePageCommand extends BaseCommand {
 
             this.cabinetInteractor
                 .createPage(pageName.trim(), dest.id)
+                .then(this.onCreated)
                 .catch((err: { message: string; }) => {
                     window.showErrorMessage(err.message);
                 });

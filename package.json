@@ -2,13 +2,12 @@
 	"name": "okayish-cabinet-vscode-ext",
 	"displayName": "Ok-ish Cabinet",
 	"description": "An ok-ish note cabinet for developers",
-	"version": "0.3.0",
-	"preview": true,
+	"version": "0.3.1",
 	"license": "MIT",
 	"author": "kongdivin",
 	"publisher": "kongdivin",
 	"icon": "resources/icons/notebook.png",
-	"homepage": "https://marketplace.visualstudio.com/items?itemName=okayish-dev.okayish-cabinet-vscode-ext",
+	"homepage": "https://marketplace.visualstudio.com/items?itemName=kongdivin.okayish-cabinet-vscode-ext",
 	"bugs": {
 		"url": "https://github.com/kongdivin/okayish-cabinet-vscode-ext/issues",
 		"email": "comm@okayish.dev"

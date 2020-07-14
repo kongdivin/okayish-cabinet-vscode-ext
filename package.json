@@ -23,7 +23,7 @@
 		"note taking"
 	],
 	"engines": {
-		"vscode": "^1.44.0"
+		"vscode": "^1.47.0"
 	},
 	"categories": [
 		"Other"

@@ -22,10 +22,10 @@ export default class FSCabinet implements CabinetInteractor {
     private static META_FILE_NAME = "_meta.md";
     private uriProvider: UriProvider;
     private config: FSCabinetConfig;
-    private eventEmitter?: EventEmitter<string>;
+    private eventEmitter?: EventEmitter<string | undefined>;
     private fsWatchers = new Map<string, fs.FSWatcher>();
 
-    constructor(uriProvider: UriProvider, config: FSCabinetConfig, eventEmitter?: EventEmitter<string>) {
+    constructor(uriProvider: UriProvider, config: FSCabinetConfig, eventEmitter?: EventEmitter<string | undefined>) {
         this.uriProvider = uriProvider;
         this.config = config;
         this.eventEmitter = eventEmitter;
@@ -44,7 +44,7 @@ export default class FSCabinet implements CabinetInteractor {
         fs.mkdirSync(this.config.getCabinetLocation(), { recursive: true });
     }
 
-    public get event(): Event<string> | undefined {
+    public get event(): Event<string | undefined> | undefined {
         return this.eventEmitter?.event;
     }
 
@@ -171,9 +171,7 @@ Enter description here (\`${FSCabinet.META_FILE_NAME}\`)
         const parentUri = this.uriProvider.computeUri(parentId);
         const pageUri = this.createFileUri(parentUri, `${pageName}.md`);
 
-        const pageContent = `<!-- ${pageUri.toString(true)} -->
-
-# ${pageName}
+        const pageContent = `# ${pageName}
 
 Enjoy your write!`;
 

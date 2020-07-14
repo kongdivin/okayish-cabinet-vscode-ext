@@ -3,9 +3,9 @@ import { EventEmitter } from "vscode";
 
 export default class RefreshNotebookCommand extends BaseCommand {
     public static COMMAND_NAME = "okayishCabinet.refreshNotebook";
-    public notebookEventEmitter: EventEmitter<string>;
+    public notebookEventEmitter: EventEmitter<string | undefined>;
 
-    constructor(notebookEventEmitter: EventEmitter<string>) {
+    constructor(notebookEventEmitter: EventEmitter<string | undefined>) {
         super();
         this.notebookEventEmitter = notebookEventEmitter;
     }
@@ -16,7 +16,7 @@ export default class RefreshNotebookCommand extends BaseCommand {
     
     getCommandAction(): () => void{
         return () => {
-            this.notebookEventEmitter.fire();
+            this.notebookEventEmitter.fire(undefined);
         };
     }
 }

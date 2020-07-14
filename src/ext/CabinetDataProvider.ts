@@ -7,19 +7,19 @@ import CabinetCommandFactory from "./commands/CabinetCommandFactory";
 export default class CabinetDataProvider implements TreeDataProvider<string> {
     private cabinetRetriever: CabinetRetriever;
     private cmdFactory: CabinetCommandFactory;
-    private event?: Event<string>;
+    private event?: Event<string | undefined>;
 
     constructor(
         cabinetRetriever: CabinetRetriever,
         cmdFactory: CabinetCommandFactory,
-        event?: Event<string>
+        event?: Event<string | undefined>
     ) {
         this.cabinetRetriever = cabinetRetriever;
         this.cmdFactory = cmdFactory;
         this.event = event;
     }
 
-    get onDidChangeTreeData(): Event<string> | undefined {
+    get onDidChangeTreeData(): Event<string | undefined> | undefined {
         return this.event;
     }
 

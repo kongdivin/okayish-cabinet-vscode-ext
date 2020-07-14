@@ -15,13 +15,14 @@ import PreviewPageCommand from './ext/commands/PreviewPageCommand';
 import RefreshNotebookCommand from './ext/commands/RefreshNotebookCommand';
 import RenameElementCommand from './ext/commands/RenameElementCommand';
 import Commands from './ext/commands/Commands';
+import OpenLocationCommand from './ext/commands/OpenLocationCommand';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	const uriProvider = new FSUriProvider();
 	const config = new FSCabinetConfig(context);
-	const fsEventEmitter = new vscode.EventEmitter<string>();
+	const fsEventEmitter = new vscode.EventEmitter<string | undefined>();
 	const cabinet = new FSCabinet(uriProvider, config, fsEventEmitter);
 	const cabinetElementQuickPick = new FSCabinetElementQuickPick(config);
 	const cmdFactory = new CabinetCommandFactory(uriProvider);
@@ -33,6 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(new CreateSectionCommand(cabinet, config).register());
 	context.subscriptions.push(new CreatePageCommand(cabinet, config, handleOnPageCreated).register());
 	context.subscriptions.push(new PreviewPageCommand(uriProvider).register());
+	context.subscriptions.push(new OpenLocationCommand(uriProvider).register());
 	context.subscriptions.push(new RenameElementCommand(cabinet).register());
 	context.subscriptions.push(new MoveElementCommand(cabinet, cabinetElementQuickPick).register());
 	context.subscriptions.push(new DeleteElementCommand(cabinet).register());

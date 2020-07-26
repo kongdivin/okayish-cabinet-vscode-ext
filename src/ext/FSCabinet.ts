@@ -19,7 +19,6 @@ import UriProvider from "./UriProvider";
  * - Section metadata is stored in `_meta.md` inside the section folder
  */
 export default class FSCabinet implements CabinetInteractor {
-    private static META_FILE_NAME = "_meta.md";
     private uriProvider: UriProvider;
     private config: FSCabinetConfig;
     private eventEmitter?: EventEmitter<string | undefined>;
@@ -91,7 +90,7 @@ export default class FSCabinet implements CabinetInteractor {
         const childElements: CabinetElement[] = [];
 
         for (let [fileName, type] of files) {
-            if (fileName === FSCabinet.META_FILE_NAME) {
+            if (fileName === this.config.getMetaFileName()) {
                 continue;
             }
 
@@ -135,7 +134,7 @@ export default class FSCabinet implements CabinetInteractor {
 
     private async retrieveSectionMeta(uri: Uri): Promise<SectionMeta> {
         try {
-            const metaUri = this.createFileUri(uri, FSCabinet.META_FILE_NAME);
+            const metaUri = this.createFileUri(uri, this.config.getMetaFileName());
             const meta = await workspace.fs.readFile(metaUri)
                 .then(meta => grayMatter(meta.toString()))
                 .then(frontMatter => ({
@@ -158,11 +157,11 @@ export default class FSCabinet implements CabinetInteractor {
 name: ${sectionName}
 ---
 
-Enter description here (\`${FSCabinet.META_FILE_NAME}\`)
+Enter description here (\`${this.config.getMetaFileName()}\`)
 `;
 
         await workspace.fs.writeFile(
-            this.createFileUri(sectionUri, FSCabinet.META_FILE_NAME), Buffer.from(meta)
+            this.createFileUri(sectionUri, this.config.getMetaFileName()), Buffer.from(meta)
         );
         this.notify(parentId);
     }

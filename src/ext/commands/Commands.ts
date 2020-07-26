@@ -3,5 +3,6 @@ export default {
     MARKDOWN_SHOW_SOURCE: "markdown.showSource",
     MARKDOWN_PREVIEW_REFRESH: "markdown.preview.refresh",
     OPEN: "vscode.open",
-    REVEAL: "revealFileInOS"
+    REVEAL: "revealFileInOS",
+    FIND_IN_FILES: "workbench.action.findInFiles"
 };

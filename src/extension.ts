@@ -16,6 +16,7 @@ import RefreshNotebookCommand from './ext/commands/RefreshNotebookCommand';
 import RenameElementCommand from './ext/commands/RenameElementCommand';
 import Commands from './ext/commands/Commands';
 import OpenLocationCommand from './ext/commands/OpenLocationCommand';
+import FindCommand from './ext/commands/FindCommand';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -31,6 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.executeCommand(Commands.OPEN, uriProvider.computeUri(pageId));
 
 	context.subscriptions.push(new RefreshNotebookCommand(fsEventEmitter).register());
+	context.subscriptions.push(new FindCommand(config).register());
 	context.subscriptions.push(new CreateSectionCommand(cabinet, config).register());
 	context.subscriptions.push(new CreatePageCommand(cabinet, config, handleOnPageCreated).register());
 	context.subscriptions.push(new PreviewPageCommand(uriProvider).register());

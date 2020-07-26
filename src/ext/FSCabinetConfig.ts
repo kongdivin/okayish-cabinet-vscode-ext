@@ -12,7 +12,7 @@ export default class FSCabinetConfig {
         this.cabinetLocation = this.computeCabinetLocation();
     }
 
-    private computeCabinetLocation(): string {
+    private computeCabinetLocation() {
         const cabinetLocation: string | undefined =
             workspace
                 .getConfiguration()
@@ -23,11 +23,15 @@ export default class FSCabinetConfig {
             : path.join(this.ctx.globalStoragePath, FSCabinetConfig.CABINET_DEFAULT_FOLDER_NAME);
     }
 
-    public getCabinetLocation(): string {
+    public getCabinetLocation() {
         return this.cabinetLocation;
     }
 
-    public getCabinetUri(): string {
+    public getCabinetUri() {
         return Uri.file(this.cabinetLocation).toString();
+    }
+
+    public getMetaFileName() {
+        return "_meta.md"
     }
 }

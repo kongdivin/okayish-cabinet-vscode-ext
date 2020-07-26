@@ -1,6 +1,6 @@
+import { window } from "vscode";
 import CabinetInteractor from "../../cabinet-core/CabinetInteractor";
 import BaseCommand from "./BaseCommand";
-import { workspace, window } from "vscode";
 
 export default class DeleteElementCommand extends BaseCommand {
     public static COMMAND_NAME = "okayishCabinet.deleteElement";
@@ -25,7 +25,7 @@ export default class DeleteElementCommand extends BaseCommand {
                     ignoreFocusOut: true
                 }
             );
-            
+
             if (answer?.startsWith("Yes")) {
                 this.cabinetInteractor
                     .deleteElement(id)

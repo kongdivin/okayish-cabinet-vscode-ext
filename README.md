@@ -11,8 +11,8 @@ extensions to help you get the most out of it.
 ![Demo of how to create a new
 page](https://raw.githubusercontent.com/kongdivin/okayish-cabinet-vscode-ext/master/demo/new-page.gif)
 
-The extension includes necessary operations (i.e., create, rename, move and delete) for you to organize your notes. The
-experience is not ideal due to the limitation of the VSCode TreeView API, but it gets the job done.
+The extension includes necessary operations (i.e., create, rename, move, delete and search) for you to organize your notes.
+The experience is not ideal due to the limitation of the VSCode TreeView API, but it gets the job done.
 
 ## Recommended Extensions
 
